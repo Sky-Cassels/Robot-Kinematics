@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<robot name="multipleshapes">
+
+  <material name="pink">
+    <color rgba="1 0.75 0.8 1"/>
+  </material>
+
+  <material name="white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+    <link name="world"/>
+
+  <link name="first_arm">
+    <visual>
+     <origin rpy="0 0 0" xyz="0 0 0.3"/>
+      <geometry>
+        <cylinder length="0.6" radius="0.1"/>
+      </geometry>
+      <material name="pink"/>
+    </visual>
+    <collision>
+     <origin rpy="0 0 0" xyz="0 0 0.3"/>
+      <geometry>
+        <cylinder length="0.6" radius="0.2"/>
+      </geometry>
+    </collision>
+    <intertial>
+      <mass value="1"/>
+      <inertia ixx="0.1" ixy="0.1" ixz="0.1" iyy="0.1" iyz="0.1" izz="0.1"/>
+    </intertial>
+  </link> 
+
+  <link name="robot_base">
+    <visual>
+      <geometry>
+        <box size="0.6 0.6 0.2"/>
+      </geometry>
+      <material name="pink"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.6 0.6 0.2"/>
+      </geometry>
+    </collision>
+    <intertial>
+      <mass value="1"/>
+      <inertia ixx="0.1" ixy="0.1" ixz="0.1" iyy="0.1" iyz="0.1" izz="0.1"/>
+    </intertial>
+  </link>
+
+  <link name="base_rotator">
+    <visual>
+      <geometry>
+        <box size="0.4 0.4 0.1"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.4 0.4 0.1"/>
+      </geometry>
+    </collision>
+    <intertial>
+      <mass value="1"/>
+      <inertia ixx="0.1" ixy="0.1" ixz="0.1" iyy="0.1" iyz="0.1" izz="0.1"/>
+    </intertial>
+  </link>
+
+  <link name="second_arm">
+    <visual>
+     <origin rpy="0 0 0" xyz="0 0 0.4"/>
+      <geometry>
+        <cylinder length="0.6" radius="0.1"/>
+      </geometry>
+      <material name="white"/>
+    </visual>
+    <collision>
+     <origin rpy="0 0 0" xyz="0 0 0.4"/>
+      <geometry>
+        <cylinder length="0.6" radius="0.1"/>
+      </geometry>
+    </collision>
+    <intertial>
+      <mass value="1"/>
+      <inertia ixx="0.1" ixy="0.1" ixz="0.1" iyy="0.1" iyz="0.1" izz="0.1"/>
+    </intertial>
+  </link> 
+
+    <joint name="world_to_robot_base" type="fixed">
+        <parent link="world"/>
+        <child link="robot_base"/>
+        <origin xyz="0 0 0.1"/>
+    </joint>
+
+  <joint name="base_to_rotator_link" type="continuous">
+    <axis xyz="0 0 1"/>
+    <parent link="robot_base"/>
+    <child link="base_rotator"/>
+    <origin xyz="0 0 0.15"/>
+  </joint>
+
+  <joint name="first_arm_joint" type="revolute">
+    <axis xyz="1 0 0"/>
+    <limit effort="1000.0" lower="1" upper="-1" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="0 0 -0.1"/>
+    <parent link="base_rotator"/>
+    <child link="first_arm"/>
+  </joint> 
+
+  <joint name="second_arm_joint" type="revolute">
+    <axis xyz="0 1 0"/>
+    <limit effort="1000.0" lower="0.5" upper="-0.5" velocity="0.5"/>
+    <origin rpy="0 0 0" xyz="0 0 0.5"/>
+    <parent link="first_arm"/>
+    <child link="second_arm"/>
+  </joint> 
+
+</robot>
